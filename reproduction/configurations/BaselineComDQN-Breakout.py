@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 #env creator function for rllib
 def atari_env(config):
     import gymnasium as gym
+    print(config)
     env = gym.make(**config)
     
     #framestack handled by TrajectoryView API/Model
@@ -27,7 +28,7 @@ def atari_env(config):
 #                 "frameskip": 1})
 # plt.imshow(env.reset()[0])
 # print(env.spec)
-# register_env("atari", env_creator=atari_env)
+register_env("atari", env_creator=atari_env)
 
 config = DQNConfig()
 
@@ -58,7 +59,8 @@ config = config.training(
                         )
 
 config = config.environment(env="atari",
-                            env_config={"id": "ALE/Breakout-v5",
+                            env_config={
+                                "id": "ALE/Breakout-v5",
                                         "frameskip": 1},
                            # is_atari=True,
                            clip_rewards=True,
@@ -94,7 +96,7 @@ config = config.resources(num_gpus=1)
 tuner = tune.Tuner("DQN",
                    run_config=air.RunConfig(stop={"agent_timesteps_total": 5e6},
                                            log_to_file=True,
-                                           name="BaselineDQN-Breakout",
+                                           name="Baseline-DQN",
                                             # CHECKPOINT REFERENCE
                                             # https://docs.ray.io/en/master/ray-air/package-ref.html#ray.air.config.CheckpointConfig
                                            checkpoint_config=air.CheckpointConfig(num_to_keep=1,
