@@ -3,7 +3,7 @@
 conda create -y -n test python==3.10
 
 # https://www.tensorflow.org/install/pip
-conda install -y -c conda-forge cudatoolkit=11.2.2 cudnn=8.1.0
+conda install -n test -y -c conda-forge cudatoolkit=11.2.2 cudnn=8.1.0
 conda run -n test export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
 
 conda run -n test pip install ray[rllib]==2.3.0 tensorflow==2.11.0
